@@ -48,17 +48,16 @@ For the hardware I mainly used the Arduino board with two extra sensors, overall
 
 **Testing:**
 
-In the testing part of my project, I made sure that I was getting precise data as I ran live plots multiple times under one condition and then changed the condition and compared the data and made sure that I could see the difference between each case. I tested all the components of my application by running small unit tests on the individual components of the application and ensured that I was getting expected results using specific input data like playing music with a specific noise level and comparing the graphed data to the expected results (picture below for reference).  This could also be seen from the included pictures as I ran both my program and a phone application at the same and the spikes occur at the same relative time the only difference is one shows the ADC values received vs the actual decibel values from the phone application.
+In the testing part of my project, I made sure that I was getting precise data as I ran live plots multiple times under one condition and then changed the condition and compared the data and made sure that I could see the difference between each case. I tested all the components of my application by running small unit tests on the individual components of the application and ensured that I was getting expected results using specific input data like playing music with a specific noise level and comparing the graphed data to the expected results (picture below for reference). This could also be seen from the included pictures as I ran both my program and a phone application at the same and the spikes occur at the same relative time the only difference is one shows the ADC values received vs the actual decibel values from the phone application.
 
 
 <p align="center">
-  <img src="https://user-images.githubusercontent.com/89855894/152083233-98de7d08-f3d7-4577-a671-dd412a520d60.png" />
+  <img src="https://user-images.githubusercontent.com/89855894/152086631-78b4afe9-3784-40b1-9d08-46b99a0dd118.png" />
+   <img src="https://user-images.githubusercontent.com/89855894/152086868-2bbdc896-8879-438f-8512-3468984dc41e.png"
 </p>
 
-![image](https://user-images.githubusercontent.com/89855894/152086631-78b4afe9-3784-40b1-9d08-46b99a0dd118.png)
 
-
-<p align="center"><b> Figure 4: Disassembly of Delay Function  </b></p>
+<p align="center"><b> Figure 3: Sound Data (Using Java and Arduino and the sound sensor and my application) vs. Sound Data (Using phone microphone and an app)  </b></p>
 
 
 
