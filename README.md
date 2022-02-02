@@ -12,6 +12,8 @@ This project is an environment monitoring application using an Arduino grove boa
 <p align="center"><b> Figure 1: Arduino Grove Board </b></p>
 
 
+
+
 **Technical Requirement/Specifications:** 
 The system/application is broken into three distinct sections: Arduino only reading values, Java and Arduino reading values and preforming actions, and Java and Arduino graphing each with their own specifications:  
 
