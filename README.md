@@ -1,4 +1,4 @@
-# EnviromentMonitor
+# Environment Monitoring and Graphing Application
 
 
 **Project Description:**
@@ -12,63 +12,55 @@ This project is an environment monitoring application using an Arduino grove boa
 <p align="center"><b> Figure 1: Arduino Grove Board </b></p>
 
 
-**Technical Requirement/Specifications:**
+**Technical Requirement/Specifications:** 
+The system/application is broken into three distinct sections: Arduino only reading values, Java and Arduino reading values and preforming actions, and Java and Arduino graphing each with their own specifications:  
 
-The system/application is broken into four distinct sections: Breadboarding and Setup, Using the ADC, ISR versus Manual Delays, C versus Assembler each with their own specifications:
-1. Breadboarding and Setup: The ATMEGA328P is breadboarded and connected to the SNAP programmer. There are also additional connections like a potentiometer connected to ADC 5 and 8 LEDs, 4 of which are connected to the lower pins of PortB and 4 are connected to the upper pins of PortD. The chip can run the program without being connected to the SNAP programmer so all it needs to run is a connection to power over USB. There are also two other LEDs setup to blink in response to a manual delay function and an interrupt service routine using delay constants based on the value of the potentiometer.
+1.	Arduino Only: With the arduino running on its own it would be constantly looping and checking the values coming from the sound sensor, light sensor, and temperature sensor and would then print those values with their respective identifier on the display. These updates (time between each loop) are also delayed to not check too often where it would be hard to read the value from the display but also to make sure that the data is accurate. Between each update I added a delay of 10 seconds to make sure that the value on the display is accurate and is easy to read. 
 
-2. Using the ADC: In the program the ADC is set to receive analog signals from the potentiometer (ADC pin 5) and converts to a digital signal. When there is a physical change to the potentiometer it senses that change and converts it into an equivalent analog electrical signal. This analog signal is converted into a digital signal using the analog to digital converter (on ATMEGA328P) and the signal is then fed to the microprocessor and processes it accordingly. The processed signal has a 10-bit resolution implying that there is 2^10 = 1024 possible values. The board uses 5V as reference and so any analog value in between 0 and 5V is converted into its equivalent ADC value as shown below. The 0-5V range is divided into 2^10 = 1024 steps which is then used a value of 10-bit integer. The program itself also sets up reference voltage AVCC, the ADC clock pre-scaler and enables the ADC in free running mode where the ADC is triggered automatically at every rising edge of clock pulse.
 
-<p align="center">
-  <img src="https://user-images.githubusercontent.com/89855894/152082508-dd325519-bf9f-44c1-88de-2b6de94edecc.png" />
-  <img src="https://user-images.githubusercontent.com/89855894/152082533-2ce51a99-6b35-4701-9ebf-c247b9983725.png" />
-</p>
+2.	Arduino and Java Actions: The Java program would allow the users to manually turn on elements on the board and to update the information manually by pressing the respective button in the actions tab of the program. I used the jSerialComm and JavaFX APIs in my program to allow the user to manually turn on and off the red led, green led, buzzer and mosfet using buttons in the actions tab in my program. When one of the buttons is pressed it would send a value to the arduino program (in this case it would send a value between 110-115) using the serial stream. I also identified the port and stream speed in Java and the stream speed in Arduino. The values would be received in the arduino program (in ASCII) and based on the values received the arduino would then send a signal out to turn on or off the corresponding components on the board. A similar method was used to update the values on the display where the when the user would click a button the presses would be bound and would send a value to the stream (121-123) and then the arduino would be able to read the values from the stream and update the display with those values. 
 
-<p align="center"><b> Figure 2: ATMEGA328 ADC Configuration </b></p>
+
+3.	Arduino and Java Graphing: For the graphing of the different sensor values, radio buttons were used to represent each option and when a radio button is selected a massage would be show in the console and the first value in an array would be changed based on the selection. Then when the update button is pressed, it is bound to update the labels on the graph to reflect the option that is selected. Then once the graph button is pressed it would send values (131-135) to the arduino program based on the first value of the array that was used for the selections. Then on the arduino side the arduino would receive the values (in ASCII) and would change the value of a variable. Once that variable is changed the loop that is always checking for its value would start sending out values that correspond to sensor that was selected. However, to graph a user must also choose a duration using a slider or textbox. Once they press the graph button it disables the slider and textbox starts a timer with the value of the slider which would then send the value of the timer to the arduino via a value to output stream and this value would be printed on the display. And so, to graph the user would select the sensor they want using a radio button and then they would press the update button to update the labels of the graph and then the user selects the duration value and then they would press the graph button. The timer would start at the duration selected and the values would be graphed on the graph on the GUI until the timer reaches one where the graph would stop graphing and the red led would turn on. The user could then use another sensor by clearing the plot and choosing another sensor, update button, duration, and then the graph button.
+
+
 
 **Components List:**
 
-In terms of the hardware used for this project the some of the parts were used for to breadboard the microprocessor and others were needed for my program these include:
+For the hardware I mainly used the Arduino board with two extra sensors, overall, all of the components I used in this project are as follows (from Seeed Studio documentation of the board): 
+*	Red LED: Simple LED module that is turned on and off.
+*	Green LED: Simple LED built into the board that is turned on and off.
+*	Piezo Buzzer: Used to generate basic beeps and tones upon command from the Java program.
+*	Display: Used to display the values from the sensors on the board.
+*	Light Sensor: Detects surrounding light intensity. 
+*	Sound Sensor: Detects surrounding sound intensity.
+*	DHT22 Humidity Sensor: Detects surrounding humidity values.
+*	(External) LM35 Temperature Sensor: Detects surrounding temperature values.
+*	(External) Moisture Sensor: Detects the moisture values of where it is placed.
+*	(External) Mosfet: Used with a combination of a battery pack so that when it is given a signal it would turn on a pump.
 
-*	ATMEGA328P: 8-bit microprocessor used to run the program; the parts associated with breadboarding the microprocessor include:
-
-    *	Breadboard: Used to put together all the parts for the microprocessor.
-
-    *	16 MHz Crystal: Used as a clock for the microprocessor keeping time to prevent processes from jumping ahead or lagging.
-
-    *	2x 39pF Load Capacitor: Used to ground the crystal.
-
-    *	Button: Used to ground pin 1 of the microprocessor to reset it.
-
-    *	Voltage Regulator: Used to provide power (5V) to circuit using USB. 
-  
-
-*	SNAP Programmer: Used as a debugger/programmer to upload programs from MPLABX to ATMEGA328.
-
-*	8x Blue 3mm LED: Used to show the 8-bit value of the potentiometer where each LED represents a bit.
-
-*	Potentiometer: Analog source used to control the frequency of an LED using a manual delay.
-
-*	Red 3mm LED: Blinks at the frequency of a manual delay based on the value of the potentiometer.
-
-*	Blue 3mm LED: Blinks at the frequency of a timer, turned on and off by an interrupt service routine
 
 <p align="center">
-  <img src="https://user-images.githubusercontent.com/89855894/152083078-88a2d1dd-e894-4d34-b058-8bde5f8fb9a8.png" />
+  <img src="https://user-images.githubusercontent.com/89855894/152086466-2db5153a-690e-4c28-9edd-45f41444ae92.png" />
 </p>
 
-<p align="center"><b> Figure 3: Fritzing Breadboard Setup </b></p>
+<p align="center"><b> Figure 2: Components Diagram </b></p>
 
 **Testing:**
 
-In terms of checking the disassembled code I disassembled sections of my code in both compiler explorer and MPLABX as a method of checking the disassembly process in compiler explorer and selecting the correct compiler (AVR gcc vs Arduino Uno.) The disassembled code for my delay function can be seen in Figure 4 where it is disassembled using compiler explorer and MPLABX. 
+In the testing part of my project, I made sure that I was getting precise data as I ran live plots multiple times under one condition and then changed the condition and compared the data and made sure that I could see the difference between each case. I tested all the components of my application by running small unit tests on the individual components of the application and ensured that I was getting expected results using specific input data like playing music with a specific noise level and comparing the graphed data to the expected results (picture below for reference).  This could also be seen from the included pictures as I ran both my program and a phone application at the same and the spikes occur at the same relative time the only difference is one shows the ADC values received vs the actual decibel values from the phone application.
 
 
 <p align="center">
   <img src="https://user-images.githubusercontent.com/89855894/152083233-98de7d08-f3d7-4577-a671-dd412a520d60.png" />
 </p>
 
+![image](https://user-images.githubusercontent.com/89855894/152086631-78b4afe9-3784-40b1-9d08-46b99a0dd118.png)
+
+
 <p align="center"><b> Figure 4: Disassembly of Delay Function  </b></p>
+
+
 
 **Conclusion:**
 
