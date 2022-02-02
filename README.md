@@ -1,9 +1,10 @@
 # Environment Monitoring and Graphing Application
 
-<pre>
 **Project Description:**
 
 This project is an environment monitoring application using an Arduino grove board (Arduino Uno) and it was developed using Arduino and Java with a graphical user interface using JavaFX. It reliably captures live data from the boards sensors performs actions using elements on the board.The project’s focus was to create a user-friendly application that allows the user to test some of the supported actuators on the grove board and to allow any user to collect meaningful data from the sensors as well as interact with that boards.  
+
+
 
 <p align="center">
   <img src="https://user-images.githubusercontent.com/89855894/152086180-2dd04897-d3d1-4073-9eff-f64e133a01a4.png" />
@@ -11,8 +12,12 @@ This project is an environment monitoring application using an Arduino grove boa
  
 <p align="center"><b> Figure 1: Arduino Grove Board </b></p>
 
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/89855894/152087238-c216fe94-1bd2-44cd-84f3-99184bfd9673.png" />
+ </p>
+ 
+<p align="center"><b> Figure 2: Graphing UI </b></p>
 
-<Bk
 
 **Technical Requirement/Specifications:** 
 The system/application is broken into three distinct sections: Arduino only reading values, Java and Arduino reading values and preforming actions, and Java and Arduino graphing each with their own specifications:  
@@ -46,7 +51,7 @@ For the hardware I mainly used the Arduino board with two extra sensors, overall
   <img src="https://user-images.githubusercontent.com/89855894/152086466-2db5153a-690e-4c28-9edd-45f41444ae92.png" />
 </p>
 
-<p align="center"><b> Figure 2: Components Diagram </b></p>
+<p align="center"><b> Figure 3: Components Diagram </b></p>
 
 **Testing:**
 
@@ -59,13 +64,11 @@ In the testing part of my project, I made sure that I was getting precise data a
 </p>
 
 
-<p align="center"><b> Figure 3: Sound Data (Using Java and Arduino and the sound sensor and my application) vs. Sound Data (Using phone microphone and an app)  </b></p>
+<p align="center"><b> Figure 4: Sound Data (Using Java and Arduino and the sound sensor and my application) vs. Sound Data (Using phone microphone and an app)  </b></p>
 
 
 
 **Conclusion:**
 
-Overall, my goal was to develop a project that uses the ADC on the ATMEGA328P in unison with timers and a ISR routine to test the performance of mixing C and assembler. This project gave me a chance to apply and expand the my knowledge on the AVR architecture.I have plans to expand my project use the analog to digital converter, timers and interrupt service routines using the MIPS architecture.
-
-</pre>
+Overall, my goal in this project was to develop a user-friendly application that allows the user to interact with their grove boards as well as capture accurate data from the sensors on the board and relay that data onto meaningful graphs. This project also gave me a chance to apply my object-oriented programming and Arduino knowledge and apply it in a practical way and to reflect on the process that I used to develop my application. 
 
